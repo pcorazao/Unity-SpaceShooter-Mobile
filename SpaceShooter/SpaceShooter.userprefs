@@ -1,11 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Qualcomm Augmented Reality/Scripts/ITrackableEventHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Qualcomm Augmented Reality/Scripts/ITrackableEventHandler.cs" Line="13" Column="2" />
-      <File FileName="Assets/Plugins/Ligabo/scripts/LigaboTrackingHandler.cs" Line="20" Column="1" />
-      <File FileName="Assets/Plugins/Ligabo/scripts/ITrackableEventHandler.cs" Line="12" Column="1" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="27" Column="61" />
+      <File FileName="Assets/Scripts/Mover.cs" Line="8" Column="14" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>lastPlayerSighting</Value>
+          <Value>position</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
