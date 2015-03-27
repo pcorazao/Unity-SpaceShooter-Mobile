@@ -19,8 +19,14 @@ public class PlayerController : MonoBehaviour {
 
 	public float fireRate = 0.5f;
 	private float nextFire = 0.0f;
+	private Quaternion calibrationQuaternion;//iphone
 
-
+	#region iphone
+	void Start()
+	{
+		CalibrateAccellerometer ();
+	}
+	#endregion
 
 	void Update(){
 
@@ -32,16 +38,40 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	#region iphone
+	void CalibrateAccellerometer()
+	{
+		Vector3 accelerateSnapshot = Input.acceleration;
+		Quaternion rotateQuaternion = Quaternion.FromToRotation (new Vector3 (0.0f, 0.0f, -1.0f), accelerateSnapshot);
+		calibrationQuaternion = Quaternion.Inverse (rotateQuaternion);
+	}
+	
+	Vector3 FixAcceleration(Vector3 acceleration)
+	{
+		Vector3 fixedAcceleration = calibrationQuaternion * acceleration;
+		return fixedAcceleration;
+	}
+	#endregion
+
 	void FixedUpdate()
 	{
 		//called just before each physics setup
-
-		float moveHorizontal = Input.GetAxis ("Horizontal") * Speed;
-		float moveVertical = Input.GetAxis("Vertical") * Speed;
-
 		var rigidbody = GetComponent<Rigidbody> ();
-		var movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-		rigidbody.velocity = movement;
+
+		//for keyboard and mouse.
+//		float moveHorizontal = Input.GetAxis ("Horizontal") * Speed;
+//		float moveVertical = Input.GetAxis("Vertical") * Speed;
+//		var movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+//		rigidbody.velocity = movement;
+
+		#region iPhone
+
+		Vector3 accelerationRaw = Input.acceleration;
+		Vector3 acceleration = FixAcceleration(accelerationRaw);
+		var movement = new Vector3 (acceleration.x, 0.0f, acceleration.y);
+		rigidbody.velocity = movement * Speed;
+
+		#endregion
 
 		rigidbody.position = new Vector3 (Mathf.Clamp (rigidbody.position.x, boundary.xMin, boundary.xMax), 
 		                                  0.0f, 
@@ -50,5 +80,7 @@ public class PlayerController : MonoBehaviour {
 		rigidbody.rotation = Quaternion.Euler (0.0f, 0.0f, rigidbody.velocity.x * -tilt);
 
 	}
+
+
 
 }
