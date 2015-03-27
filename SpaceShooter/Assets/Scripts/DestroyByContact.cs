@@ -24,8 +24,10 @@ public class DestroyByContact : MonoBehaviour {
 		if (other.tag == "Boundary") 
 			return;
 
-		if (other.tag == "Player") 
+		if (other.tag == "Player") {
+			gameController.GameOver();
 			Instantiate (playerExplosion, other.transform.position, other.transform.rotation); //create a new game object
+		}
 
 
 
