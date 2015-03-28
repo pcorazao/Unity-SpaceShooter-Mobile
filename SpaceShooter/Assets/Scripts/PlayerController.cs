@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour {
 	private float nextFire = 0.0f;
 	private Quaternion calibrationQuaternion;//iphone
 
+
+	public SimpleTouchPad touchPad;
+	public SimpleTouchAreaButton areaButton;
+
 	#region iphone
 	void Start()
 	{
@@ -30,12 +34,21 @@ public class PlayerController : MonoBehaviour {
 
 	void Update(){
 
-		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
-			nextFire = Time.time + fireRate;
-			Instantiate (shot, shotSpawn.position, shotSpawn.rotation); //create a new game object
-			var audioSource = GetComponent<AudioSource>();
-			audioSource.Play();
+		#region iphone
+		if (areaButton.CanFire() && Time.time > nextFire) {
+						nextFire = Time.time + fireRate;
+						Instantiate (shot, shotSpawn.position, shotSpawn.rotation); //create a new game object
+						var audioSource = GetComponent<AudioSource>();
+						audioSource.Play();
 		}
+		#endregion
+
+//		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
+//			nextFire = Time.time + fireRate;
+//			Instantiate (shot, shotSpawn.position, shotSpawn.rotation); //create a new game object
+//			var audioSource = GetComponent<AudioSource>();
+//			audioSource.Play();
+//		}
 	}
 
 	#region iphone
@@ -66,9 +79,12 @@ public class PlayerController : MonoBehaviour {
 
 		#region iPhone
 
-		Vector3 accelerationRaw = Input.acceleration;
-		Vector3 acceleration = FixAcceleration(accelerationRaw);
-		var movement = new Vector3 (acceleration.x, 0.0f, acceleration.y);
+//		Vector3 accelerationRaw = Input.acceleration;
+//		Vector3 acceleration = FixAcceleration(accelerationRaw);
+//		var movement = new Vector3 (acceleration.x, 0.0f, acceleration.y);
+
+		var direction = touchPad.GetDirection();
+		var movement = new Vector3 (direction.x, 0.0f, direction.y);
 		rigidbody.velocity = movement * Speed;
 
 		#endregion
